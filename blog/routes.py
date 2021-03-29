@@ -1,3 +1,4 @@
+# pylint: disable=no-member
 from blog import app, db
 from flask import render_template, request, redirect, url_for, flash
 from blog.forms import RegisterFrom
@@ -8,7 +9,7 @@ from blog.models import User
 def home():
     return render_template('home.html')
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['POST', 'GET'])
 def register():
     form = RegisterFrom()
     if form.validate_on_submit():
@@ -21,5 +22,6 @@ def register():
         return redirect(url_for('home'))
     if form.errors != {}:
         for err in form.errors.values():
+            print(err)
             flash(f"There was an error with creating a user: {err}", category='danger')
     return render_template('register.html', form=form)

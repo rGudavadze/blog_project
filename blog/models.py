@@ -1,14 +1,21 @@
-from blog import db
+from blog import db, bcrypt
 from datetime import datetime
 
 class User(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     username = db.Column(db.String(length=30), unique=True, nullable=False)
     email = db.Column(db.String(length=40), unique=True, nullable=False)
-    password = db.Column(db.String(length=40), nullable=False)
+    password_hash = db.Column(db.String(length=40), nullable=False)
     posts = db.relationship('Post', backref='owned_user', lazy=True)
     comments = db.relationship('Comment', backref='owned_user', lazy=True)
 
+    @property
+    def password(self):
+        return self.password
+
+    @password.setter
+    def password(self, plain_text):
+        self.password_hash = bcrypt.generate_password_hash(plain_text).decode('utf-8')
 
 
 class Post(db.Model):
