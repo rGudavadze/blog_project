@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Blogs{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <form method="post", class="form-blog", style="color:white">
+        {{ form.hidden_tag() }}
+        <br>
+        
+        {{ form.title.label() }}
+        {{ form.title(class="form-control", placeholder="Title") }}
+
+        {{ form.post.label() }}
+        {{ form.post(class="form-control", placeholder="Post Here") }}
+
+        <br>
+        {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
+    </form>
+</div>
+
+<br>
+{% for p in posts %}
+<div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+    <div class="col-md-12 px-0">
+      <h1 class="display-5 fst-italic">{{p.title}}</h1>
+      <p class="lead my-3">{{p.post}}</p>
+      <p class="lead mb-0"><a href="#" class="text-white fw-bold">Continue reading...</a></p>
+    </div>
+</div>
+<br>
+{% endfor %}
+
+{% endblock %}

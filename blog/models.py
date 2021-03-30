@@ -28,12 +28,12 @@ class User(db.Model, UserMixin):
 
 class Post(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
+    title = db.Column(db.String(length=100), nullable=False)
     post = db.Column(db.String(length=1000), nullable=False)
-    rating = db.Column(db.Float(), nullable=False)
+    rating = db.Column(db.Float(), nullable=False, default=0.0)
     date = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
     owner = db.Column(db.Integer(), db.ForeignKey('user.id'))
     comments = db.relationship('Comment', backref='owned_post', lazy=True)
-
 
 
 class Comment(db.Model):

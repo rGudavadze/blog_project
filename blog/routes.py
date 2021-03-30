@@ -1,8 +1,8 @@
 # pylint: disable=no-member
 from blog import app, db
 from flask import render_template, request, redirect, url_for, flash
-from blog.forms import RegisterFrom, LoginForm
-from blog.models import User
+from blog.forms import RegisterFrom, LoginForm, BlogForm
+from blog.models import User, Post
 from flask_login import login_user, logout_user, login_required, current_user
 
 @app.route('/')
@@ -45,3 +45,19 @@ def logout():
     logout_user()
     flash("You have been logged out!", category="info")
     return redirect(url_for('login'))
+
+@app.route('/blogs', methods=['GET', 'POST'])
+@login_required
+def blogs():
+    form = BlogForm()
+    if form.validate_on_submit():
+        create_blog = Post(title=form.title.data,
+                            post=form.post.data)
+        db.session.add(create_blog)
+        db.session.commit()
+        
+        return redirect(url_for('blogs'))
+    
+    posts = Post.query.all()
+
+    return render_template('blogs.html', form=form, posts=posts)
