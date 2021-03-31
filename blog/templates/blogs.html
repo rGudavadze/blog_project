@@ -22,11 +22,13 @@
 
 <br>
 {% for p in posts %}
-<div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+<div class="p-4 p-md-5 mb-4 text-white rounded bg-dark" style="width: 70%; display: flex; margin: auto;">
     <div class="col-md-12 px-0">
       <h1 class="display-5 fst-italic">{{p.title}}</h1>
-      <p class="lead my-3">{{p.post}}</p>
-      <p class="lead mb-0"><a href="#" class="text-white fw-bold">Continue reading...</a></p>
+      <p class="lead my-3">{{p.post[0:150]}}</p>
+      {% if p.post|length>150 %}
+      <p class="lead mb-0"><a href="/blogs/{{p.id}}" class="text-white fw-bold">Continue reading...</a></p>
+      {% endif %}
     </div>
 </div>
 <br>

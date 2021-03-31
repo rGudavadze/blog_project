@@ -61,3 +61,8 @@ def blogs():
     posts = Post.query.all()
 
     return render_template('blogs.html', form=form, posts=posts)
+
+@app.route('/blogs/<int:id>')
+def individual_blog(id):
+    blog = Post.query.filter_by(id=id).first()
+    return render_template('individual_blog.html', blog=blog)
