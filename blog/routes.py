@@ -1,8 +1,8 @@
 # pylint: disable=no-member
 from blog import app, db
 from flask import render_template, request, redirect, url_for, flash
-from blog.forms import RegisterFrom, LoginForm, BlogForm
-from blog.models import User, Post
+from blog.forms import RegisterFrom, LoginForm, BlogForm, CommentForm
+from blog.models import User, Post, Comment
 from flask_login import login_user, logout_user, login_required, current_user
 
 @app.route('/')
@@ -54,10 +54,10 @@ def blogs():
         create_blog = Post(title=form.title.data,
                             post=form.post.data)
 
-        create_blog.set_owner()
-
         db.session.add(create_blog)
         db.session.commit()
+        
+        create_blog.set_owner()
         
         return redirect(url_for('blogs'))
     
@@ -65,7 +65,17 @@ def blogs():
 
     return render_template('blogs.html', form=form, posts=posts)
 
-@app.route('/blogs/<int:id>')
+@app.route('/blogs/<int:id>', methods=['GET', 'POST'])
 def individual_blog(id):
+    form = CommentForm()
     blog = Post.query.filter_by(id=id).first()
-    return render_template('individual_blog.html', blog=blog)
+    comments = Comment.query.filter_by(owner_post=id).all()
+    if form.validate_on_submit():
+        new_comment = Comment(comment=form.comment.data)
+        db.session.add(new_comment)
+        db.session.commit()
+
+        new_comment.set_comment_owner(id)
+
+        return redirect(f"/blogs/{id}")
+    return render_template('individual_blog.html', blog=blog, comments=comments, form=form)

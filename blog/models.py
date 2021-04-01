@@ -43,7 +43,12 @@ class Post(db.Model):
 class Comment(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     comment = db.Column(db.String(length=1000), nullable=False)
-    like = db.Column(db.Integer(), nullable=False)
+    like = db.Column(db.Integer(), nullable=False, default=0)
     date = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
     owner_user = db.Column(db.Integer(), db.ForeignKey('user.id'))
     owner_post = db.Column(db.Integer(), db.ForeignKey('post.id'))
+
+    def set_comment_owner(self, post_id):
+        self.owner_user = current_user.id
+        self.owner_post = post_id
+        db.session.commit()

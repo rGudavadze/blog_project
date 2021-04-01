@@ -2,6 +2,13 @@
 
 {% block title %}
     <title>Log In</title>
+    <style>
+        .blog-login {
+            width: 25%;
+            margin: auto;
+        }
+        
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -14,10 +21,10 @@
             </h1>
             <br>
             {{ form.email.label() }}
-            {{ form.email(class="form-control", placeholder="Email Address") }}
+            {{ form.email(class="form-control blog-login", placeholder="Email Address") }}
             
             {{ form.password.label() }}
-            {{ form.password(class="form-control", placeholder="Password") }}
+            {{ form.password(class="form-control blog-login", placeholder="Password") }}
             <br>
             <div class="checkbox nb-3">
                 <h6>Do not have an account?</h6>

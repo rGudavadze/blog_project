@@ -30,4 +30,8 @@ class BlogForm(FlaskForm):
     title = StringField(label='Blog Title', validators=[DataRequired()])
     post = StringField(label='Post Here', validators=[DataRequired()])
     submit = SubmitField(label="Post")
+
+class CommentForm(FlaskForm):
+    comment = StringField(label='Write comment here', validators=[DataRequired()])
+    submit = SubmitField(label='Comment')
     
