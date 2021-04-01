@@ -1,6 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}Blogs{% endblock %}
+{% block title %}
+    <title>Blogs</title>
+    <style>
+        .blog-forms-title, .blog-forms-post{
+            width: 600px;
+            margin: auto;
+        }
+        .blog-forms-post{
+            height: 80px;
+            overflow-wrap: break-word;
+        }
+    </style>
+{% endblock %}
 
 {% block content %}
 
@@ -10,10 +22,10 @@
         <br>
         
         {{ form.title.label() }}
-        {{ form.title(class="form-control", placeholder="Title") }}
+        {{ form.title(class="form-control blog-forms-title", placeholder="Title") }}
 
         {{ form.post.label() }}
-        {{ form.post(class="form-control", placeholder="Post Here") }}
+        {{ form.post(class="form-control blog-forms-post", placeholder="Post Here") }}
 
         <br>
         {{ form.submit(class="btn btn-lg btn-block btn-primary") }}
@@ -26,9 +38,9 @@
     <div class="col-md-12 px-0">
       <h1 class="display-5 fst-italic">{{p.title}}</h1>
       <p class="lead my-3">{{p.post[0:150]}}</p>
-      {% if p.post|length>150 %}
+      
       <p class="lead mb-0"><a href="/blogs/{{p.id}}" class="text-white fw-bold">Continue reading...</a></p>
-      {% endif %}
+      
     </div>
 </div>
 <br>

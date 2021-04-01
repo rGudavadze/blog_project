@@ -1,6 +1,6 @@
 from blog import db, bcrypt, login_manager
 from datetime import datetime
-from flask_login import UserMixin
+from flask_login import UserMixin, current_user
 
 
 @login_manager.user_loader
@@ -34,6 +34,10 @@ class Post(db.Model):
     date = db.Column(db.DateTime(), nullable=False, default=datetime.utcnow)
     owner = db.Column(db.Integer(), db.ForeignKey('user.id'))
     comments = db.relationship('Comment', backref='owned_post', lazy=True)
+
+    def set_owner(self):
+        self.owner = current_user.id
+        db.session.commit()
 
 
 class Comment(db.Model):

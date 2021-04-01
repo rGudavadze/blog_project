@@ -53,6 +53,9 @@ def blogs():
     if form.validate_on_submit():
         create_blog = Post(title=form.title.data,
                             post=form.post.data)
+
+        create_blog.set_owner()
+
         db.session.add(create_blog)
         db.session.commit()
         
