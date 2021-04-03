@@ -62,9 +62,8 @@ def blogs():
         return redirect(url_for('blogs'))
     
     posts = Post.query.all()
-    users = User.query.all()
 
-    return render_template('blogs.html', form=form, posts=posts, users=users)
+    return render_template('blogs.html', form=form, posts=posts)
 
 @app.route('/blogs/<int:id>', methods=['GET', 'POST'])
 def individual_blog(id):

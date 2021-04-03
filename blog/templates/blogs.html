@@ -12,8 +12,11 @@
             overflow-wrap: break-word;
         }
         #blog-id{
-            width: 40%;
+            width: 45%;
             margin: auto;
+            border: 1px solid grey;
+            border-radius: 15px;
+            padding: 20px;
         }
         header, footer {
               display: flex;
@@ -29,6 +32,7 @@
               flex-direction: column;
               justify-content: center;
               margin-left: 10px;
+              color: #cedbd2;
         }
         header .like-btn {
               display: flex;
@@ -46,11 +50,20 @@
         #inner p {
               margin: 10px 20px 10px 20px;
               font-size: 18px;
+              color: #cedbd2;
         }
         #inner hr {
               margin: 20px 0;
               border-style: solid;
               opacity: 0.1;
+        }
+        #more-button{
+            background-color: #258f42;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .date{
+            color: #cedbd2;
         }
     </style>
 {% endblock %}
@@ -77,18 +90,21 @@
 <br>
 <div id="blog-id">
     <header>
-        <img src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt="Quincy Larson's profile picture" class="profile-thumbnail">
+        <img src="https://lifelinemedicalservices.co.uk/wp-content/uploads/2020/06/blank-profile-picture-973460_1280.jpg" alt="Quincy Larson's profile picture" class="profile-thumbnail">
         <div class="profile-name">
-          <h3>{{ p.owner }}</h3>
+          <h3>{{ p.owned_user.username }}</h3>
         </div>
         <div class="like-btn">
           <button>Like</button>
         </div>
     </header>
     <div id="inner">
-        <p>{{p.post[:120]}} ...<a class="text-white" href="/blogs/{{p.id}}">Continue</a></p>
-        <span class="date">{{p.date}}</span>
+        <p>{{p.post[:120]}}...</p>
+        <p style="margin-top:20px;">
+            <a class="text-white" id="more-button" href="/blogs/{{p.id}}">See All</a>
+        </p>
         <hr>
+        <span class="date">{{p.date}}</span>
     </div>
 </div>
 
