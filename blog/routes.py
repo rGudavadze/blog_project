@@ -61,7 +61,7 @@ def blogs():
         
         return redirect(url_for('blogs'))
     
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.date.desc()).all()
 
     return render_template('blogs.html', form=form, posts=posts)
 
@@ -77,5 +77,5 @@ def individual_blog(id):
 
         new_comment.set_comment_owner(id)
 
-        return redirect(f"/blogs/{id}")
+        return redirect(f"/blog/{id}")
     return render_template('individual_blog.html', blog=blog, comments=comments, form=form)
