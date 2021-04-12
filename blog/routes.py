@@ -34,7 +34,7 @@ def login():
         if user_attempt and user_attempt.check_password(form.password.data):
             login_user(user_attempt)
             flash(f'Success! You are logged in as {user_attempt.username}', category='success')
-            return redirect(url_for('home'))
+            return redirect(url_for('blogs'))
         else:
             flash("Username and Password are not match!", category='danger')
     return render_template('login.html', form=form)
@@ -60,8 +60,13 @@ def blogs():
         create_blog.set_owner()
         
         return redirect(url_for('blogs'))
-    
-    posts = Post.query.order_by(Post.date.desc()).all()
+
+    q = request.args.get("q")
+    if q:
+        posts = Post.query.filter(Post.title.contains(q) | Post.post.contains(q))
+    else:
+        posts = Post.query.order_by(Post.date.desc()).all()
+
 
     return render_template('blogs.html', form=form, posts=posts)
 
@@ -77,5 +82,5 @@ def individual_blog(id):
 
         new_comment.set_comment_owner(id)
 
-        return redirect(f"/blog/{id}")
+        return redirect(f"/blogs/{id}")
     return render_template('individual_blog.html', blog=blog, comments=comments, form=form)
