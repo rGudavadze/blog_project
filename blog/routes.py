@@ -84,3 +84,7 @@ def individual_blog(id):
 
         return redirect(f"/blogs/{id}")
     return render_template('individual_blog.html', blog=blog, comments=comments, form=form)
+
+@app.route('/covid')
+def covid():
+    return render_template("covid.html")

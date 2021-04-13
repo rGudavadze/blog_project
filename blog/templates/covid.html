@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+<script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+        fetch("https://api.covid19api.com/summary")
+        .then(response => response.json())
+        .then(data => {
+            for(let i=0; i<data.Countries.length; i++){
+                const lst = [
+                                data.Countries[i].Country,
+                                data.Countries[i].NewConfirmed,
+                                data.Countries[i].TotalConfirmed,
+                                data.Countries[i].NewDeaths,
+                                data.Countries[i].NewRecovered,
+                                data.Countries[i].TotalRecovered,
+                                data.Countries[i].Date
+                            ]
+                const tr = document.createElement('tr')
+                for(let j=0; j<lst.length; j++){
+                    const td = document.createElement('td')
+                    td.innerHTML = lst[j]
+                    tr.append(td)
+                }
+
+                document.querySelector('tbody').append(tr)
+            }
+        })
+    })
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row" style="width: 80%; margin: auto; margin-top: 30px; margin-bottom: 30px;">
+    
+    <h2>Covid 19 Statistics</h2>
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Country</th>
+                <th scope="col">New Confirmed</th>
+                <th scope="col">Total Confirmed</th>
+                <th scope="col">New Deaths</th>
+                <th scope="col">New Recovered</th>
+                <th scope="col">Total Recovered</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    
+</div>
+
+{% endblock %}

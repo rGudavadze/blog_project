@@ -66,6 +66,21 @@
         
     </style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Tangerine">
+
+    <script>
+        let counter = 0;
+    
+        function like(id) {
+            counter++;
+            document.querySelector(`#blog-${id}`).innerHTML = counter;
+            
+        }
+    
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector(`#blog-${id}`).onclick = count;
+        });
+    
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -111,12 +126,6 @@
         <span class="date">{{p.date}}</span>
     </div>
 </div>
-<script>
-    function like(id){
-        
-        document.querySelector(`#blog-${id}`).style.color='red'
-    }
-</script>
 {% endfor %}
 
 {% endblock %}
